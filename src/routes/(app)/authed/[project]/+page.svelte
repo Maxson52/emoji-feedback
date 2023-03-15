@@ -45,7 +45,7 @@
 
   // Embed code
   const embed = `
-  <iframe src="${$page.url.origin}/embed/${$page.data.project.id}" title="Test" width="306px" height="146px" style="border: none;"></iframe>
+  <iframe src="${$page.url.origin}/embed/${$page.data.project.id}" title="${$page.data.project.name}" width="306px" height="146px" style="border: none;"></iframe>
   `;
 </script>
 
