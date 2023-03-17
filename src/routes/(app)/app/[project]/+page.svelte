@@ -70,7 +70,7 @@
 </div>
 
 <!-- List table of responses -->
-<table class="table-auto border mb-4">
+<table class="table-auto border-2 border-slate-700 mb-4">
   <thead class="text-left">
     <tr>
       <th>Response</th>
@@ -85,8 +85,9 @@
         <td>{response.response}</td>
         <td>{new Date(response.timestamp).toLocaleString()}</td>
         <td
-          >{response.location.region + ", " + response.location.country ??
-            "Unknown"}</td
+          >{response.location
+            ? response.location.region + ", " + response.location.country
+            : "Unknown"}</td
         >
         <td>
           <form
@@ -123,9 +124,9 @@
     method="POST"
     action="?/deleteAllResponses"
   >
-    <button class="bg-yellow-600 hover:bg-yellow-700"
-      >Delete all project responses</button
-    >
+    <button class="bg-yellow-600 hover:bg-yellow-700">
+      Delete all project responses
+    </button>
   </form>
   <form
     use:enhance={({ cancel }) => {
@@ -144,6 +145,6 @@
 <style lang="postcss">
   td,
   th {
-    @apply p-2 border-b;
+    @apply p-2;
   }
 </style>

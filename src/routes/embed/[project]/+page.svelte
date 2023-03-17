@@ -32,7 +32,7 @@
 
 {#if loaded}
   <div
-    class="grid w-64 min-h-[6rem] text-center place-items-center"
+    class="grid min-w-[16rem] min-h-[6rem] text-center place-items-center"
     style={`color: ${textColor};`}
   >
     {#if $page.form?.success}
