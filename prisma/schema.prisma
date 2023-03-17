@@ -63,6 +63,9 @@ model Responses {
   project_id String
   project    Projects @relation(references: [id], fields: [project_id], onDelete: Cascade)
   response   String
+  timestamp  DateTime @default(now())
+  location   Json?
+  metadata   Json?
 
   @@index([project_id])
   @@map("responses")

@@ -5,7 +5,7 @@ const config = {
     extend: {},
   },
 
-  plugins: [],
+  plugins: [require("tailwindcss-inner-border")],
 };
 
 module.exports = config;

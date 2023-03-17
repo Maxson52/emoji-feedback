@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { prismaClient } from "$lib/server/prisma";
 import { fail } from "@sveltejs/kit";
 import type { Actions } from "./$types";
@@ -20,6 +21,14 @@ export const actions: Actions = {
   default: async ({ request, params }) => {
     const data = await request.formData();
     const emoji = data.get("emoji") as string;
+    const locationData = JSON.parse(data.get("location") as string);
+
+    const location =
+      ({
+        country: locationData.country,
+        region: locationData.region,
+        city: locationData.city,
+      } as Prisma.JsonObject) ?? "";
 
     if (!emoji) return fail(400, { error: "Missing emoji" });
 
@@ -28,6 +37,7 @@ export const actions: Actions = {
         data: {
           project_id: params.project,
           response: emoji,
+          location,
         },
       });
 

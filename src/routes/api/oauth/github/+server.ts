@@ -30,5 +30,5 @@ export const GET: RequestHandler = async ({ cookies, url, locals }) => {
     });
   }
 
-  throw redirect(302, "/authed");
+  throw redirect(302, "/app");
 };

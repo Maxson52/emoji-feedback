@@ -1,29 +1,5 @@
 import { redirect, type Actions, fail } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
 import { prismaClient } from "$lib/server/prisma";
-
-export const load: PageServerLoad = async ({ locals, params }) => {
-  const session = await locals.validate();
-  if (!session) throw redirect(302, "/");
-
-  const project = await prismaClient.projects.findUnique({
-    where: {
-      id: params.project,
-    },
-    include: {
-      responses: true,
-    },
-  });
-
-  // Error if user doesn't own project
-  if (!project || project.user_id !== session.userId) {
-    throw redirect(302, "/authed");
-  }
-
-  return {
-    project,
-  };
-};
 
 export const actions: Actions = {
   deleteProject: async ({ locals, params }) => {
@@ -43,7 +19,7 @@ export const actions: Actions = {
     }
   },
 
-  deleteProjectResponses: async ({ locals, params }) => {
+  deleteAllResponses: async ({ locals, params }) => {
     const session = await locals.validate();
     if (!session) throw redirect(302, "/");
 
@@ -57,6 +33,26 @@ export const actions: Actions = {
       return {};
     } catch (e) {
       return fail(400, { error: "Error deleting responses" });
+    }
+  },
+
+  deleteResponse: async ({ locals, request }) => {
+    const session = await locals.validate();
+    if (!session) throw redirect(302, "/");
+
+    const data = await request.formData();
+    const id = data.get("id") as string;
+
+    try {
+      await prismaClient.responses.delete({
+        where: {
+          id,
+        },
+      });
+
+      return {};
+    } catch (e) {
+      return fail(400, { error: "Error deleting response" });
     }
   },
 };
